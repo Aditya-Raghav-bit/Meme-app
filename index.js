@@ -7,14 +7,24 @@ const memeModal = document.getElementById("meme-modal")
 const memeModalInner = document.getElementById("meme-modal-inner")
 const memeModalCloseBtn = document.getElementById("meme-modal-close-btn")
 
-getImageBtn.addEventListener('click', renderCat)
-
-memeModalCloseBtn.addEventListener('click', function(){
-    memeModal.style.display = 'none'
-})
-
+memeModalCloseBtn.addEventListener('click', closeModal)
 
 emotionRadios.addEventListener('change', highlightCheckedOption)
+
+getImageBtn.addEventListener('click', renderCat)
+
+
+function closeModal(){
+    memeModal.style.display = 'none'
+}
+
+function highlightCheckedOption(e){
+    const radios = document.getElementsByClassName('radio')
+    for(let radio of radios){
+        radio.classList.remove('highlight')
+    }
+    document.getElementById(e.target.id).parentElement.classList.add('highlight')
+}
 
 function getMatchingCatsArray(){
     
@@ -35,19 +45,6 @@ function getMatchingCatsArray(){
 
 }
 
-function getSingleCatObject(){
-    const catsArray = getMatchingCatsArray();
-    
-    if(catsArray.length === 1){
-            return catsArray[0]
-        }
-        
-    else{
-        const randomNumber = Math.floor(Math.random() * catsArray.length)
-        return catsArray[randomNumber]
-        }
-}
-
 function renderCat(){
     const catObject = getSingleCatObject();
 
@@ -60,12 +57,17 @@ function renderCat(){
     memeModal.style.display = "flex"
 }
 
-function highlightCheckedOption(e){
-    const radios = document.getElementsByClassName('radio')
-    for(let radio of radios){
-        radio.classList.remove('highlight')
-    }
-    document.getElementById(e.target.id).parentElement.classList.add('highlight')
+function getSingleCatObject(){
+    const catsArray = getMatchingCatsArray();
+    
+    if(catsArray.length === 1){
+            return catsArray[0]
+        }
+        
+    else{
+        const randomNumber = Math.floor(Math.random() * catsArray.length)
+        return catsArray[randomNumber]
+        }
 }
 
 function getEmotionsArray(cats){
